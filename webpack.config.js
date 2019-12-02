@@ -21,7 +21,29 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: "css-loader"
+        use: [
+            "style-loader",
+            "css-loader"
+          ]
+      },
+      {
+        test:/\.(jpg|png|gif|jpeg|svg)$/,
+        use:{
+          //一般搭配file-loader使用
+          loader:'url-loader',
+          options:{
+            limit:1024,//当图片小于1024kb时，就被转换成base64
+            name:'[name]-pic.[ext]'
+          }
+        }
+      },
+      {
+        test:/\.styl$/,
+        use:[
+          "style-loader",
+          "css-loader",
+          "stylus-loader"
+        ]
       }
     ]
   }

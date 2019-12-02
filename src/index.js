@@ -2,6 +2,10 @@
 import Vue from 'vue';
 import App from './app.vue';
 
+import './asset/styles/test.css';
+import './asset/styles/test.stylus.styl';
+import './asset/images/polor.jpg';
+
 const root = document.createElement('div');
 document.body.appendChild(root);
 
