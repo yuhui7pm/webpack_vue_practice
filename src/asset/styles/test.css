@@ -1,4 +1,5 @@
 body{
   color: blue;
-  background-image:url('../images/house.svg') ;
+  background:url('../images/house.svg') no-repeat;
+  background-color:yellow;
 }

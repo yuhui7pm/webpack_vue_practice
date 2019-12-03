@@ -14,6 +14,6 @@ document.body.appendChild(root);
 // }的缩写
 
 //$mount()手动挂载，然后渲染
-new Vew({
+new Vue({
   render:(h)=>h(App)
 }).$mount(root);
