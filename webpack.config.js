@@ -29,6 +29,10 @@ const config = {
           ]
       },
       {
+        test: /\.jsx$/,
+        loader: "babel-loader"
+      },
+      {
         test:/\.(jpg|png|gif|jpeg|svg)$/,
         use:{
           //一般搭配file-loader使用
@@ -40,10 +44,18 @@ const config = {
         }
       },
       {
-        test:/\.styl$/,
+        test:/\.styl/,
         use:[
           "style-loader",
           "css-loader",
+          {
+            //自动添加浏览器前缀 
+            loader:"postcss-loader",
+            //使用stylus-loader已经生成的sourceMap
+            options:{
+              sourceMap:true
+            }
+          },
           "stylus-loader"
         ]
       }
