@@ -106,6 +106,11 @@ if(isDev){
     new webpack.NoEmitOnErrorsPlugin() //启用此插件后，webpack 进程遇到错误代码将不会退出。
   )
 }else{
+  config.entry = {
+    //对第三方类库进行打包
+    app:path.join(__dirname,'src/index.js'),
+    vendor:["vue"]
+  }
   config.output.filename = '[name].[chunkhash:8].js'
   config.module.rules.push(
     {
@@ -134,8 +139,28 @@ if(isDev){
   )
   //contenthash是针对文件内容级别的，只有你自己模块的内容变了，那么hash值才改变，
   config.plugins.push(
-    new extractTextPlugin('styles.[md5:contenthash:hex:8].css') //因为webpack4.3包含了contenthash这个字段，所以不能使用contenthash，要使用md5:contenthash:hex:8来替代
+    new extractTextPlugin('styles.[md5:contenthash:hex:8].css'), //因为webpack4.3包含了contenthash这个字段，所以不能使用contenthash，要使用md5:contenthash:hex:8来替代
   )
+  //CommonsChunkPlugin主要是用来提取第三方库和公共模块
+  config.optimization = {   
+    splitChunks:{
+      cacheGroups: {
+        commons: {
+            name: "vendor", //将公共模块提取，生成名为`vendors`的chunk
+        },
+      },
+    }    
+  }
+  //生成在app.js的内容，有新的模块加入时，webpack会给每个内容加上一个Id,可能插入在中间，所以id都会改变
+  config.optimization = {   
+    splitChunks:{
+      cacheGroups: {
+        commons: {
+            name: "runtime",
+        },
+      },
+    }    
+  }
 }
 
 module.exports = config;
